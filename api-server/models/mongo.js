@@ -10,8 +10,8 @@ class Model {
   takes an _id 
   returns array of the records
    */
-  get(_id) {
-    let obj = _id ? { _id } : {};
+  get(userName) {
+    let obj = userName ? { userName } : {};
     return this.schema.find(obj);
   }
 

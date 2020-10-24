@@ -25,10 +25,12 @@ function getModel(req,res,next){
 }
 router.param('model', getModel);
 router.get('/:model' ,bearerAuth, permissions('read'),handelGetAll);
+// router.get('/:model/username/:username',bearerAuth, permissions('read'),handelGetByUsername);
 router.post('/:model',bearerAuth, permissions('create'),handelPost);
 router.get('/:model/:id',bearerAuth, permissions('read'),handelGetOne);
 router.put('/:model/:id',bearerAuth, permissions('update'),handelUpdate);
 router.delete('/:model/:id',bearerAuth, permissions('delete'),handelDelete);
+router.patch('/:model/:id',bearerAuth, permissions('update'),handelUpdate)
 
 /**
 Function handelGetAll
@@ -42,6 +44,18 @@ function handelGetAll(req,res,next){
       res.json({count,results});
     }).catch(next);
 }
+//////// Get records by username
+function handelGetByUsername(req,res,next){
+  let username = req.params.username;
+  req.model.get(username)
+    .then(record=>{
+      res.json(record);
+    }).catch(next);
+}
+
+
+
+
 /**
 Function handelGetOne
 to get on record by id from a model
